@@ -54,6 +54,28 @@ describe Bones::App::FileManager do
     ]
   end
 
+  it "should return a list of files to copy, even if they don't have extensions" do
+    @fm.source = Bones.path 'spec/data/data_without_extensions'
+
+    ary = @fm._files_to_copy
+
+    ary.should == %w[
+      .bnsignore
+      History.txt.bns
+      LICENSE
+      README.txt.bns
+      Rakefile.bns
+      TODO
+      bin/NAME.bns
+      lib/NAME.rb.bns
+      spec/NAME_spec.rb.bns
+      spec/spec_helper.rb.bns
+      test/GUIDELINES
+      test/test_NAME.rb
+    ]
+  end
+
+
   it "should archive the destination directory if it exists" do
     @fm.destination = Bones.path(%w[spec data bar])
     test(?e, @fm.destination).should == false
